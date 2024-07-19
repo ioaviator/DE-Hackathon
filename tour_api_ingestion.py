@@ -1,4 +1,4 @@
-#installing library needed
+#importing library needed
 import requests
 import pandas as pd
 
