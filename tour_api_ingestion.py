@@ -1,7 +1,8 @@
+#installing library needed
 import requests
 import pandas as pd
 
-url = "https://restcountries.com/v3.1/all"
+url = "https://restcountries.com/v3.1/all"  #country data api
 
 response = requests.get(url)
 countries_data = response.json()
