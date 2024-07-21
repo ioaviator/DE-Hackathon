@@ -1,3 +1,4 @@
+#importing library 
 import requests
 import pandas as pd
 import os
@@ -6,7 +7,9 @@ import duckdb
 from dotenv import load_dotenv
 from functions import attach_db_to_motherduck, fetch_country_data
 
+
 load_dotenv()
+
 
 duckdb_file_path = os.getenv("DB_PATH")
 
