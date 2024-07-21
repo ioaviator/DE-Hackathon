@@ -5,7 +5,7 @@ import os
 import logging
 import duckdb
 from dotenv import load_dotenv
-from functions import attach_db_to_motherduck, fetch_country_data
+from functions import attach_db_to_motherduck, fetch_country_data, transform_data
 
 
 load_dotenv()
@@ -17,7 +17,12 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 try:
     logging.info("Fetching country data from API...")
-    df = fetch_country_data()
+    #df = fetch_country_data()
+    
+    ## two tables are returned from the dataframe
+    df, df_language_expand = transform_data(fetch_country_data())
+    ###########
+    
     logging.info("Data fetched successfully.")
     logging.info("Saving data to DuckDB...")
     con = duckdb.connect(duckdb_file_path)
