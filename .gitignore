@@ -3,3 +3,7 @@
 /rusd.py
 /tesing.py
 /.gitignore
+/.env
+/view_duckdb_table.py
+/duckdb_to_motherduck.py
+/myenv

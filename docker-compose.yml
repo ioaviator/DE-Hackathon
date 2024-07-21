@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  duckdb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: duckdb_container
+    volumes:
+      - duckdb_data:/data
+      - ./tour_api_ingestion.py:/app/tour_api_ingestion.py
+    ports:
+      - "9080:9080"
+    command: ["duckdb", "/data/countries_tour_data.duckdb"]
+
+volumes:
+  duckdb_data:
