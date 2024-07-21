@@ -95,6 +95,23 @@ def fetch_country_data(url="https://restcountries.com/v3.1/all"):
     df = pd.DataFrame(data)
     return df
 
+def transform_data(df):
+        ## convert column names to lowercase and replace space between names with underscores
+    df.columns = df.columns.str.lower().str.replace(' ', '_')
+
+    ## The code here selects the country and language from the dataframe
+    # and unpivots the values 
+    df_language = df[['country_name', 'languages']]
+    df_language_expand = df_language.set_index('country_name')['languages'].str.split(', ', expand=True).stack().reset_index(level=1, drop=True).reset_index(name='language')
+    
+    df.drop('languages', axis=1, inplace=True)
+
+    ##print(df.columns)
+    ##print(df.head(2)), print(df_language_expand.head(2) )
+    return df, df_language_expand
+
+
+
 def attach_db_to_motherduck():
     # Load environment variables from .env file
     load_dotenv()
