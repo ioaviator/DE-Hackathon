@@ -1,5 +1,9 @@
-/cgy.py
+/cgyd.py
 /ingestion.py
 /rusd.py
 /tesing.py
 /.gitignore
+/.env
+/view_duckdb_table.py
+/duckdb_to_motherduck.py
+/myenv
