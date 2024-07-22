@@ -96,8 +96,11 @@ def fetch_country_data(url="https://restcountries.com/v3.1/all"):
     return df
 
 def transform_data(df):
-        ## convert column names to lowercase and replace space between names with underscores
+    ## convert column names to lowercase and replace space between names with underscores
     df.columns = df.columns.str.lower().str.replace(' ', '_')
+
+    ## replace null values
+    df.fillna('Unspecified', inplace=True)
 
     ## The code here selects the country and language from the dataframe
     # and unpivots the values 
@@ -107,7 +110,7 @@ def transform_data(df):
     df.drop('languages', axis=1, inplace=True)
 
     ##print(df.columns)
-    ##print(df.head(2)), print(df_language_expand.head(2) )
+    ##print(df.info()), print(df.head(2)), print(df_language_expand.head(2) )
     return df, df_language_expand
 
 
