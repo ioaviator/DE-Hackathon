@@ -95,36 +95,11 @@ def fetch_country_data(url="https://restcountries.com/v3.1/all"):
     df = pd.DataFrame(data)
     return df
 
-def transform_data(df):
-    ## convert column names to lowercase and replace space between names with underscores
-    df.columns = df.columns.str.lower().str.replace(' ', '_')
-
-    ## replace null values
-    df.fillna('Unspecified', inplace=True)
-
-    ## The code here selects the country and language from the dataframe
-    # and unpivots the values 
-    df_language = df[['country_name', 'languages']]
-    df_language_expand = df_language.set_index('country_name')['languages'].str.split(', ', expand=True).stack().reset_index(level=1, drop=True).reset_index(name='language')
-    
-    df.drop('languages', axis=1, inplace=True)
-
-    ##print(df.columns)
-    ##print(df.info()), print(df.head(2)), print(df_language_expand.head(2) )
-    return df, df_language_expand
-
-
-
 def attach_db_to_motherduck():
-    # Load environment variables from .env file
     load_dotenv()
-
-    # Get the environment variables
     motherduck_token = os.getenv("MOTHERDUCK_TOKEN")
     db_path = os.getenv("DB_PATH")
     db_name = "countries_tour_data"
-
-    # Configure logging
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     try:
@@ -134,11 +109,9 @@ def attach_db_to_motherduck():
 
         logging.info(f"Checking if the database '{db_path}' is already attached...")
 
-        # Attach the database only if it's not already attached
         attached_dbs = con.execute("PRAGMA database_list").fetchall()
         logging.info(f"Currently attached databases: {attached_dbs}")
 
-        # Detach the database if it's already attached
         for db in attached_dbs:
             if db[1] == db_name:
                 logging.info(f"Detaching the already attached database: {db_name}")
@@ -148,8 +121,6 @@ def attach_db_to_motherduck():
         logging.info(f"Attaching the database from path: {db_path}")
         con.sql(f"ATTACH DATABASE '{db_path}' AS {db_name}")
         logging.info(f"Database '{db_path}' attached successfully.")
-
-        # Check if the database already exists in MotherDuck and create or replace accordingly
         logging.info(f"Checking if the database '{db_name}' exists in MotherDuck...")
         existing_dbs = con.execute("SHOW DATABASES").fetchall()
         if db_name in [db[0] for db in existing_dbs]:
