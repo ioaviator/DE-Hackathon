@@ -117,7 +117,6 @@ def attach_db_to_motherduck():
                 logging.info(f"Detaching the already attached database: {db_name}")
                 con.execute(f"DETACH DATABASE {db_name}")
                 logging.info(f"Database '{db_name}' detached successfully.")
-
         logging.info(f"Attaching the database from path: {db_path}")
         con.sql(f"ATTACH DATABASE '{db_path}' AS {db_name}")
         logging.info(f"Database '{db_path}' attached successfully.")
