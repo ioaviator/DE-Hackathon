@@ -7,3 +7,5 @@
 /view_duckdb_table.py
 /duckdb_to_motherduck.py
 /myenv
+/countries_tour_data.csv
+/countries_tour_data.duckdb
