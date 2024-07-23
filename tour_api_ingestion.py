@@ -3,7 +3,7 @@ import logging
 import duckdb
 import pandas as pd
 from dotenv import load_dotenv
-from functions import fetch_country_data, extract_country_data, convert_to_dataframe, load_data_to_motherduck
+from functions import fetch_country_data, extract_country_data, convert_to_dataframe, transform_data, load_data_to_motherduck
 
 load_dotenv()
 duckdb_file_path = os.getenv("DB_PATH")
@@ -14,9 +14,8 @@ try:
     raw_data = fetch_country_data()
     country_data = extract_country_data(raw_data)
     df = convert_to_dataframe(country_data)
+    df, df_language_expand = transform_data(df)
     logging.info(f"DataFrame 'df' has {df.shape[0]} rows and {df.shape[1]} columns.")
-    
-    df_language_expand = pd.DataFrame()
     
     logging.info("Data fetched and transformed successfully.")
 
@@ -60,14 +59,6 @@ finally:
     if con:
         con.close()
     logging.info("Disconnected from DuckDB.")
-
-try:
-    logging.info("Attaching DuckDB database to MotherDuck...")
-    attach_db_to_motherduck()
-    logging.info("Database attached to MotherDuck successfully.")
-except Exception as e:
-    logging.error(f"Failed to attach database to MotherDuck: {e}")
-
 try:
     logging.info("Loading data into MotherDuck...")
     load_data_to_motherduck()
