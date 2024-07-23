@@ -75,16 +75,6 @@ To integrate country information from a public REST API into the travel agency's
      echo "Latest duckdb image version already exists, version: ${duckdb_version}"
    fi
 
-## Running the Project
-
-### Build and Run Docker Container
-
-To build and run the Docker container, execute the following command in your terminal:
-
-```bash
-docker-compose up --build
-
-
 ## Verify Data
 
 - Check the DuckDB instance to ensure the data has been correctly loaded and is accessible.
@@ -96,3 +86,12 @@ docker-compose up --build
 - **Non-Docker Usage:** While Docker provides an easy way to ensure consistency and portability, you can also run the Python ETL scripts and DuckDB locally. However, using Docker simplifies dependencies and environment management.
 
 For more information on DuckDB and its usage, refer to the [DuckDB documentation](https://duckdb.org/docs/). For any issues or questions, please contact the project maintainers.
+
+## Running the Project
+
+### Build and Run Docker Container
+
+To build and run the Docker container, execute the following command in your terminal:
+
+```bash
+docker-compose up --build
