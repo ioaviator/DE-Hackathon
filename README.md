@@ -75,6 +75,15 @@ To integrate country information from a public REST API into the travel agency's
      echo "Latest duckdb image version already exists, version: ${duckdb_version}"
    fi
 
+## Running the Project
+
+### Build and Run Docker Container
+
+To build and run the Docker container, execute the following command in your terminal:
+
+```bash
+docker-compose up --build
+
 ### Verify Data:
 
 - Check the DuckDB instance to ensure the data has been correctly loaded and is accessible.
