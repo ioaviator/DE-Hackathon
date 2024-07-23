@@ -85,11 +85,11 @@ To build and run the Docker container, execute the following command in your ter
 docker-compose up --build
 
 
-### Verify Data:
+## Verify Data
 
 - Check the DuckDB instance to ensure the data has been correctly loaded and is accessible.
 
-### Notes
+## Notes
 
 - **DuckDB CLI:** DuckDB works as an in-process SQL OLAP database, meaning it can be used within the Docker container to process and analyze data without requiring a separate database server. The Docker setup ensures that DuckDB and all necessary scripts are packaged together, providing a consistent and isolated environment.
 
