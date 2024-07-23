@@ -42,6 +42,13 @@ To integrate country information from a public REST API into the travel agency's
      - Create interactive visualizations and reports.
      - Enable stakeholders to gain insights and make informed decisions based on the latest data.
 
+
+6.  **Analysis and Insights**
+     - For Analysis Using SQL Code, [Click Here](./sql/README.md)
+
+     - Power BI Data Visualization Link [Click Here](https://app.powerbi.com/view?r=eyJrIjoiZDU1NTcxZGMtOTAxMC00MTgwLWFkYTctYTU0YmQyZmE4OGRhIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9)
+
+
 ## Docker Setup
 
 ### Build and Push Docker Image
