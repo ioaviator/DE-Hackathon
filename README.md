@@ -84,6 +84,7 @@ To build and run the Docker container, execute the following command in your ter
 ```bash
 docker-compose up --build
 
+
 ### Verify Data:
 
 - Check the DuckDB instance to ensure the data has been correctly loaded and is accessible.
