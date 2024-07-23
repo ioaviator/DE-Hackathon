@@ -11,10 +11,11 @@ This project aims to integrate comprehensive country information from a public R
 This project aims to integrate country information from a public REST API into the travel agency's data infrastructure. This data will be utilized to enhance customer travel destination recommendations based on various factors such as language, continent, region, currency, and more.
 
 ##  Project Architecture Overview
-![](https://github.com/protechanalysis/DE-Hackathon/blob/main/pipeline_flow.png)
+![pipeline_flow](https://github.com/protechanalysis/DE-Hackathon/blob/main/pipeline_flow.png)
 
 ###  Architecture Components:
-####  Data Source:
+
+###  Data Source: [Here](https://restcountries.com/v3.1/all)
 
 - REST API: A public API providing comprehensive country information (e.g., country name, language, continent, region, currency, population).
 
@@ -48,3 +49,7 @@ This project aims to integrate country information from a public REST API into t
     -  Enable stakeholders to gain insights and make informed decisions based on the latest data.
 
 
+## Analysis and Insights
+### For Analysis Using SQL Code, [Click Here](./sql/README.md)
+
+### Power BI Data Visualization Link [Click Here](https://app.powerbi.com/view?r=eyJrIjoiZDU1NTcxZGMtOTAxMC00MTgwLWFkYTctYTU0YmQyZmE4OGRhIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9)
