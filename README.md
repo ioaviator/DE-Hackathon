@@ -1,55 +1,97 @@
-#  DATA ENGINEERING HACKATHON
+# Data Engineering Hackathon
 
+## Project Overview
 
-##  Project Overview
+This project integrates comprehensive country information from a public REST API to enhance travel destination recommendations for our customers at the travel agency. By leveraging detailed data on attributes such as language, continent, region, and currency, the system provides personalized and relevant travel suggestions.
 
-This project aims to integrate comprehensive country information from a public REST API to enhance travel destination recommendations for our customers at the travel agency. The focus is on leveraging detailed data on countries' attributes such as language, continent, region, and currency to provide personalized and relevant travel suggestions.
+### Objective
 
-
-###  Objective:
-
-This project aims to integrate country information from a public REST API into the travel agency's data infrastructure. This data will be utilized to enhance customer travel destination recommendations based on various factors such as language, continent, region, currency, and more.
+To integrate country information from a public REST API into the travel agency's data infrastructure. The data will be utilized to enhance customer travel destination recommendations based on various factors such as language, continent, region, currency, and more.
 
 ##  Project Architecture Overview
 ![pipeline_flow](https://github.com/protechanalysis/DE-Hackathon/blob/main/pipeline_flow.png)
 
-###  Architecture Components:
+### Architecture Components
 
-###  Data Source: [Here](https://restcountries.com/v3.1/all)
+1. **Data Source:**
+   - **REST API:** A public API providing comprehensive country information, including country name, language, continent, region, currency, and population.
 
-- REST API: A public API providing comprehensive country information (e.g., country name, language, continent, region, currency, population).
+2. **Data Extraction and Transformation:**
+   - **Python Scripts:**
+     - Extract data from the REST API.
+     - Clean and normalize the data.
+     - Transform the data into a structured format suitable for loading into DuckDB.
+   - **Docker:**
+     - Containerize the Python ETL scripts to ensure consistency, portability, and scalability across different environments.
 
-###  Data Extraction and Transformation:
+3. **Data Storage:**
+   - **DuckDB:**
+     - Store the transformed data.
+     - Utilize DuckDB for its efficient, high-performance analytical capabilities.
 
-- Python Scripts:
-    - Extract data from the REST API.
-    - Clean and normalize the data.
-    - Transform the data into a structured format suitable for loading into DuckDB.
-      
-- Docker: Containerize the Python ETL scripts to ensure consistency, portability, and scalability across different environments.
+4. **Data Integration and Enhancement:**
+   - **MotherDuck:**
+     - Extend DuckDB with cloud storage, collaborative data processing, and enhanced scalability.
+     - Serve as the intermediary layer to integrate DuckDB with analytics tools.
 
-####  Data Storage:
+5. **Data Visualization and Analytics:**
+   - **Power BI:**
+     - Connect to MotherDuck to access up-to-date data.
+     - Create interactive visualizations and reports.
+     - Enable stakeholders to gain insights and make informed decisions based on the latest data.
 
-- DuckDB:
-    - Store the transformed data.
-    - Utilize DuckDB for its efficient, high-performance analytical capabilities.
+## Docker Setup
 
-### Data Integration and Enhancement:
+### Build and Push Docker Image
 
--  MotherDuck:
-    -  Extend DuckDB with cloud storage, collaborative data processing, and enhanced scalability.
-    -  Serve as the intermediary layer to integrate DuckDB with analytics tools.
+1. **Script Overview:**
+   This script builds and pushes a Docker image for DuckDB. It checks if the latest version of DuckDB is already available; if not, it builds and pushes the image.
 
+2. **Script:**
 
-###  Data Visualization and Analytics:
+   ```bash
+   #!/usr/bin/env bash
 
--  Power BI:
-    -  Connect to MotherDuck to access up-to-date data.
-    -  Create interactive visualizations and reports.
-    -  Enable stakeholders to gain insights and make informed decisions based on the latest data.
+   platforms="linux/amd64,linux/arm64"
 
+   echo "Getting latest tag version from duckdb"
+   duckdb_version=$(git -C build/duckdb describe --tags --abbrev=0)
+   image_name=ogunseye/duckdb:"${duckdb_version}"
 
-## Analysis and Insights
-### For Analysis Using SQL Code, [Click Here](./sql/README.md)
+   if [ -z "$(DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect "$image_name" 2> /dev/null)" ]; then
+     echo "Building for duckdb version: ${duckdb_version}"
 
-### Power BI Data Visualization Link [Click Here](https://app.powerbi.com/view?r=eyJrIjoiZDU1NTcxZGMtOTAxMC00MTgwLWFkYTctYTU0YmQyZmE4OGRhIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9)
+     docker run --privileged --rm tonistiigi/binfmt --install all
+     docker buildx create --use --name builder
+     docker buildx inspect --bootstrap builder
+
+     docker buildx build \
+       --platform "$platforms" \
+       --build-arg "DUCKDB_VERSION=${duckdb_version}" \
+       -t "$image_name" --push .
+
+     echo "Done!"
+   else
+     echo "Latest duckdb image version already exists, version: ${duckdb_version}"
+   fi
+
+## Verify Data
+
+- Check the DuckDB instance to ensure the data has been correctly loaded and is accessible.
+
+## Notes
+
+- **DuckDB CLI:** DuckDB works as an in-process SQL OLAP database, meaning it can be used within the Docker container to process and analyze data without requiring a separate database server. The Docker setup ensures that DuckDB and all necessary scripts are packaged together, providing a consistent and isolated environment.
+
+- **Non-Docker Usage:** While Docker provides an easy way to ensure consistency and portability, you can also run the Python ETL scripts and DuckDB locally. However, using Docker simplifies dependencies and environment management.
+
+For more information on DuckDB and its usage, refer to the [DuckDB documentation](https://duckdb.org/docs/). For any issues or questions, please contact the project maintainers.
+
+## Running the Project
+
+### Build and Run Docker Container
+
+To build and run the Docker container, execute the following command in your terminal:
+
+```bash
+docker-compose up --build

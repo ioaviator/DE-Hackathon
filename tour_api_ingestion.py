@@ -1,19 +1,23 @@
 import os
 import logging
 import duckdb
+import pandas as pd
 from dotenv import load_dotenv
-from functions import fetch_country_data, transform_data,load_data_to_motherduck
+from functions import fetch_country_data, extract_country_data, convert_to_dataframe, load_data_to_motherduck
 
 load_dotenv()
 duckdb_file_path = os.getenv("DB_PATH")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 con = None
 try:
     logging.info("Fetching country data from API...")
-    df, df_language_expand = transform_data(fetch_country_data())
+    raw_data = fetch_country_data()
+    country_data = extract_country_data(raw_data)
+    df = convert_to_dataframe(country_data)
     logging.info(f"DataFrame 'df' has {df.shape[0]} rows and {df.shape[1]} columns.")
-    logging.info(f"DataFrame 'df_language_expand' has {df_language_expand.shape[0]} rows and {df_language_expand.shape[1]} columns.")
+    
+    df_language_expand = pd.DataFrame()
+    
     logging.info("Data fetched and transformed successfully.")
 
     logging.info("Connecting to DuckDB...")
@@ -21,8 +25,8 @@ try:
 
     def table_exists(con, table_name):
         try:
-            result = con.execute(f"SHOW TABLES LIKE '{table_name}'").fetchall()
-            return len(result) > 0
+            result = con.execute(f"SELECT COUNT(*) FROM information_schema.tables WHERE table_name = '{table_name}'").fetchone()
+            return result[0] > 0
         except Exception as e:
             logging.error(f"Error checking table existence: {e}")
             return False
@@ -37,9 +41,12 @@ try:
 
     table2 = 'countries_language_expand'
     if not table_exists(con, table2):
-        logging.info(f"Saving DataFrame to table '{table2}' in DuckDB...")
-        con.execute(f"CREATE OR REPLACE TABLE {table2} AS SELECT * FROM df_language_expand")
-        logging.info(f"Data saved to table '{table2}' successfully.")
+        if not df_language_expand.empty:
+            logging.info(f"Saving DataFrame to table '{table2}' in DuckDB...")
+            con.execute(f"CREATE OR REPLACE TABLE {table2} AS SELECT * FROM df_language_expand")
+            logging.info(f"Data saved to table '{table2}' successfully.")
+        else:
+            logging.warning(f"DataFrame '{table2}' is empty. Skipping ingestion.")
     else:
         logging.info(f"Table '{table2}' already exists in DuckDB. Skipping ingestion.")
 
