@@ -1,6 +1,6 @@
 <br />
 
-## To go back to main Repo. [Click Here](../README.md)
+## Back to main Repo. [Click Here](../README.md)
 
 <br/>
 
@@ -59,7 +59,7 @@ GROUP BY currency_name
 
 <br />
 
-## To go back to main Repo. [Click Here](../README.md)
+## Back to main Repo. [Click Here](../README.md)
 
 <br />
 
@@ -250,4 +250,4 @@ LIMIT 5
 
 <br />
 
-## To go back to main Repo. [Click Here](../README.md)
+## Back to main Repo. [Click Here](../README.md)

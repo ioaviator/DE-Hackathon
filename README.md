@@ -35,10 +35,19 @@ To integrate country information from a public REST API into the travel agency's
      - Serve as the intermediary layer to integrate DuckDB with analytics tools.
 
 5. **Data Visualization and Analytics:**
+   - **SQL**
+     - Database query and analytics.
    - **Power BI:**
      - Connect to MotherDuck to access up-to-date data.
      - Create interactive visualizations and reports.
      - Enable stakeholders to gain insights and make informed decisions based on the latest data.
+
+
+6.  **Analysis and Insights**
+     - For Analysis Using SQL Code, [Click Here](./sql/README.md)
+
+     - Power BI Data Visualization Link [Click Here](https://app.powerbi.com/view?r=eyJrIjoiZDU1NTcxZGMtOTAxMC00MTgwLWFkYTctYTU0YmQyZmE4OGRhIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9)
+
 
 ## Docker Setup
 
