@@ -8,8 +8,9 @@ from dotenv import load_dotenv
 def fetch_country_data(url="https://restcountries.com/v3.1/all"):
     response = requests.get(url)
     response.raise_for_status()  # Raise an exception for HTTP errors
-    countries_data = response.json()
+    return response.json()
 
+def extract_country_data(raw_data):
     data = {
         "Country Name": [],
         "Independence": [],
@@ -30,7 +31,7 @@ def fetch_country_data(url="https://restcountries.com/v3.1/all"):
         "Continents": []
     }
 
-    for i in countries_data:
+    for i in raw_data:
         data["Country Name"].append(i.get("name", {}).get("common", "Unknown"))
         data["Independence"].append(i.get("independent", "Unknown"))
         data["United Nation members"].append(i.get("unMember", "Unknown"))
@@ -66,8 +67,11 @@ def fetch_country_data(url="https://restcountries.com/v3.1/all"):
 
         data["Continents"].append(i.get("continents", [None])[0])
 
-    df = pd.DataFrame(data)
-    return df
+    return data
+
+def convert_to_dataframe(data):
+    return pd.DataFrame(data)
+
 
 def transform_data(df):
     df.columns = df.columns.str.lower().str.replace(' ', '_')
