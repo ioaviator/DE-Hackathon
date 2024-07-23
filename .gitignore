@@ -9,3 +9,4 @@
 /myenv
 /countries_tour_data.csv
 /countries_tour_data.duckdb
+/test.py
