@@ -9,7 +9,7 @@ This project integrates comprehensive country information from a public REST API
 To integrate country information from a public REST API into the travel agency's data infrastructure. The data will be utilized to enhance customer travel destination recommendations based on various factors such as language, continent, region, currency, and more.
 
 ##  Project Architecture Overview
-![pipeline_flow](https://github.com/protechanalysis/DE-Hackathon/blob/main/pipeline_flow.png)
+![pipeline_flow](./img/pipeline_flow.png)
 
 ### Architecture Components
 
