@@ -13,7 +13,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy the Python script into the container
-COPY tour_api_ingestion.py .
+COPY api_ingestion.py .
 
 # Install any Python dependencies if needed
 # RUN pip install some_package
